@@ -1,5 +1,11 @@
 package com.praveen.neo.entity;
 
+import org.springframework.data.neo4j.core.schema.GeneratedValue;
+import org.springframework.data.neo4j.core.schema.Id;
+import org.springframework.data.neo4j.core.schema.Node;
+import org.springframework.data.neo4j.core.schema.Property;
+
+@Node(labels = "Subject")
 public class Subject {
 
     public Subject() {
@@ -10,8 +16,11 @@ public class Subject {
         this.subName = subName;
     }
 
+    @Id
+    @GeneratedValue
     private Long id;
 
+    @Property("sub_name")
     private String subName;
 
     public Long getId() {

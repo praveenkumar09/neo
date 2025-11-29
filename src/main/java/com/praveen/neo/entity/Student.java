@@ -1,5 +1,11 @@
 package com.praveen.neo.entity;
 
+import org.springframework.data.neo4j.core.schema.GeneratedValue;
+import org.springframework.data.neo4j.core.schema.Id;
+import org.springframework.data.neo4j.core.schema.Node;
+import org.springframework.data.neo4j.core.schema.Property;
+
+@Node(labels = "Student")
 public class Student {
 
     public Student() {
@@ -12,12 +18,17 @@ public class Student {
         this.birthYear = birthYear;
     }
 
+    @Id
+    @GeneratedValue
     private long id;
 
+    @Property("name")
     private String name;
 
+    @Property("country")
     private String country;
 
+    @Property("birth_year")
     private Integer birthYear;
 
     public long getId() {

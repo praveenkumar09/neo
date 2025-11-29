@@ -1,5 +1,12 @@
 package com.praveen.neo.entity;
 
+
+import org.springframework.data.neo4j.core.schema.GeneratedValue;
+import org.springframework.data.neo4j.core.schema.Id;
+import org.springframework.data.neo4j.core.schema.Node;
+import org.springframework.data.neo4j.core.schema.Property;
+
+@Node(labels = "Department")
 public class Department {
 
     public Department() {
@@ -10,8 +17,11 @@ public class Department {
         this.depName = depName;
     }
 
+    @Id
+    @GeneratedValue
     private Long id;
 
+    @Property("dep_name")
     private String depName;
 
     public Long getId() {
