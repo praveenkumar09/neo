@@ -1,9 +1,8 @@
 package com.praveen.neo.entity;
 
-import org.springframework.data.neo4j.core.schema.GeneratedValue;
-import org.springframework.data.neo4j.core.schema.Id;
-import org.springframework.data.neo4j.core.schema.Node;
-import org.springframework.data.neo4j.core.schema.Property;
+import org.springframework.data.neo4j.core.schema.*;
+
+import java.util.List;
 
 @Node(labels = "Student")
 public class Student {
@@ -11,8 +10,7 @@ public class Student {
     public Student() {
     }
 
-    public Student(long id, String name, String country, Integer birthYear) {
-        this.id = id;
+    public Student(String name, String country, Integer birthYear) {
         this.name = name;
         this.country = country;
         this.birthYear = birthYear;
@@ -30,6 +28,12 @@ public class Student {
 
     @Property("birth_year")
     private Integer birthYear;
+
+    @Relationship(type = "BELONGS_TO", direction = Relationship.Direction.OUTGOING)
+    private Department department;
+
+    @Relationship(type = "IS_LEARNING", direction = Relationship.Direction.OUTGOING)
+    private List<IsLearningRelationship> isLearningRelationshipList;
 
     public long getId() {
         return id;
@@ -61,6 +65,22 @@ public class Student {
 
     public void setBirthYear(Integer birthYear) {
         this.birthYear = birthYear;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    public List<IsLearningRelationship> getIsLearningRelationshipList() {
+        return isLearningRelationshipList;
+    }
+
+    public void setIsLearningRelationshipList(List<IsLearningRelationship> isLearningRelationshipList) {
+        this.isLearningRelationshipList = isLearningRelationshipList;
     }
 
     @Override
