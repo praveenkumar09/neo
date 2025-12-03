@@ -41,4 +41,10 @@ public class StudentController {
         return studentService
                 .getStudentByName(name);
     }
+
+    @GetMapping("/getAllStudent")
+    public List<Student> getAllStudent(){
+        return studentService
+                .findAllStudent();
+    }
 }

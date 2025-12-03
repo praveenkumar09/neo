@@ -63,4 +63,8 @@ public class StudentService {
         return studentRepository
                 .findByName(name);
     }
+
+    public List<Student> findAllStudent() {
+        return studentRepository.findAll();
+    }
 }
