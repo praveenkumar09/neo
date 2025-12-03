@@ -5,6 +5,8 @@ import com.praveen.neo.model.CreateStudentRequest;
 import com.praveen.neo.service.StudentService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/student")
 public class StudentController {
@@ -30,5 +32,13 @@ public class StudentController {
     ){
         return studentService
                 .getStudentById(id);
+    }
+
+    @GetMapping("/getStudentByName/{name}")
+    public List<Student> getStudentByName(
+            @PathVariable String name
+    ){
+        return studentService
+                .getStudentByName(name);
     }
 }
