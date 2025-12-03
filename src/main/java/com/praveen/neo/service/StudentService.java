@@ -54,4 +54,8 @@ public class StudentService {
         student.setIsLearningRelationshipList(isLearningRelationshipList);
         return studentRepository.save(student);
     }
+
+    public Student getStudentById(Long id) {
+        return studentRepository.findById(id).orElse(null);
+    }
 }
