@@ -2,16 +2,16 @@ package com.praveen.neo.model;
 
 public class CreateSubjectRequest {
 
-    private String subName;
+    private String subjectName;
 
     private Long marks;
 
-    public String getSubName() {
-        return subName;
+    public String getSubjectName() {
+        return subjectName;
     }
 
-    public void setSubName(String subName) {
-        this.subName = subName;
+    public void setSubjectName(String subjectName) {
+        this.subjectName = subjectName;
     }
 
     public Long getMarks() {
