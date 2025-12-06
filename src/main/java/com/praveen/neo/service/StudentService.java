@@ -6,6 +6,7 @@ import com.praveen.neo.entity.Student;
 import com.praveen.neo.entity.Subject;
 import com.praveen.neo.model.CreateStudentRequest;
 import com.praveen.neo.model.CreateSubjectRequest;
+import com.praveen.neo.model.GetStudentsByBirthYear;
 import com.praveen.neo.model.UpdateStudentRequest;
 import com.praveen.neo.repository.DepartmentRepository;
 import com.praveen.neo.repository.StudentRepository;
@@ -140,5 +141,10 @@ public class StudentService {
 
     public List<Student> getStudentByNameOrBirthYear(String name, Integer birthYear) {
         return studentRepository.findByNameOrBirthYear(name,birthYear);
+    }
+
+    public List<Student> getStudentsByBirthYear(GetStudentsByBirthYear getStudentsByBirthYear) {
+        return studentRepository
+                .findByBirthYearIn(getStudentsByBirthYear.getBirthYear());
     }
 }

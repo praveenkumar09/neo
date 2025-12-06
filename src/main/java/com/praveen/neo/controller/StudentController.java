@@ -2,6 +2,7 @@ package com.praveen.neo.controller;
 
 import com.praveen.neo.entity.Student;
 import com.praveen.neo.model.CreateStudentRequest;
+import com.praveen.neo.model.GetStudentsByBirthYear;
 import com.praveen.neo.model.UpdateStudentRequest;
 import com.praveen.neo.service.StudentService;
 import org.springframework.web.bind.annotation.*;
@@ -81,5 +82,14 @@ public class StudentController {
     ){
         return studentService
                 .getStudentByNameOrBirthYear(name,birthYear);
+    }
+
+    @GetMapping("/getStudentsByBirthYear")
+    public List<Student> getStudentsByBirthYear(
+            @RequestBody GetStudentsByBirthYear getStudentsByBirthYear
+    ){
+        System.out.println(getStudentsByBirthYear);
+        return studentService
+                .getStudentsByBirthYear(getStudentsByBirthYear);
     }
 }
