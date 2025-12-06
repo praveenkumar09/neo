@@ -10,10 +10,12 @@ public class Student {
     public Student() {
     }
 
-    public Student(String name, String country, Integer birthYear) {
+    public Student(String name, String country, Integer birthYear, Department department, List<IsLearningRelationship> isLearningRelationshipList) {
         this.name = name;
         this.country = country;
         this.birthYear = birthYear;
+        this.department = department;
+        this.isLearningRelationshipList = isLearningRelationshipList;
     }
 
     @Id

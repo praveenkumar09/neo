@@ -15,6 +15,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 @Service
 public class StudentService {
@@ -32,29 +35,73 @@ public class StudentService {
     }
 
     public Student createStudent(CreateStudentRequest createStudentRequest) {
-        Department department = new Department();
-        department.setDepName(createStudentRequest.getDepartment().getDepName());
-        department = departmentRepository.save(department);
+        String depName = createStudentRequest.getDepartment().getDepName();
+        Department department = createDepartment().apply(depName);
 
         List<IsLearningRelationship> isLearningRelationshipList = new ArrayList<>();
         if(createStudentRequest.getSubjectList() != null){
-            for(CreateSubjectRequest createSubjectRequest :
-                    createStudentRequest.getSubjectList()){
-                Subject subject = new Subject();
-                subject.setSubName(createSubjectRequest.getSubjectName());
-                Subject savedSubject = subjectRepository.save(subject);
-                IsLearningRelationship isLearningRelationship = new IsLearningRelationship(createSubjectRequest.getMarks(), savedSubject);
-                isLearningRelationshipList.add(isLearningRelationship);
-            }
+            processSubjectList(isLearningRelationshipList, createStudentRequest.getSubjectList());
         }
 
-        Student student = new Student();
-        student.setBirthYear(createStudentRequest.getBirthYear());
-        student.setName(createStudentRequest.getName());
-        student.setCountry(createStudentRequest.getCountry());
-        student.setDepartment(department);
-        student.setIsLearningRelationshipList(isLearningRelationshipList);
+        return createStudentAndReturn(createStudentRequest,department,isLearningRelationshipList);
+    }
+
+    private Student createStudentAndReturn(
+            CreateStudentRequest createStudentRequest,
+            Department department,
+            List<IsLearningRelationship> isLearningRelationshipList
+    ) {
+        Student student = new Student(
+                createStudentRequest.getName(),
+                createStudentRequest.getCountry(),
+                createStudentRequest.getBirthYear(),
+                department,
+                isLearningRelationshipList
+        );
         return studentRepository.save(student);
+    }
+
+    private void processSubjectList(List<IsLearningRelationship> isLearningRelationshipList, List<CreateSubjectRequest> subjectList) {
+        subjectList
+                .parallelStream()
+                .filter(subject -> subject.getSubjectName() != null && !subject.getSubjectName().isBlank())
+                .forEach(subject -> {
+                    Subject savedSubject = createSubject().apply(subject.getSubjectName());
+                    createRelationshipFromSubject(savedSubject).accept(subject.getMarks(), isLearningRelationshipList);
+                });
+    }
+
+    public BiConsumer<Long,List<IsLearningRelationship>> createRelationshipFromSubject(Subject subject){
+        return (marks,isLearningRelationshipList) -> {
+            IsLearningRelationship isLearningRelationship = new IsLearningRelationship(marks,subject);
+            isLearningRelationshipList.add(isLearningRelationship);
+        };
+    }
+
+    public Function<String,Subject> createSubject(){
+        return (subjectName) -> {
+            Subject bySubjectName = subjectRepository.findBySubName(subjectName);
+            if(bySubjectName != null){
+                return bySubjectName;
+            }else {
+                Subject subject = new Subject();
+                subject.setSubName(subjectName);
+                return subjectRepository.save(subject);
+            }
+        };
+    }
+
+    public Function<String,Department> createDepartment(){
+        return (depName) -> {
+            Department byDepName = departmentRepository.findByDepName(depName);
+            if(byDepName != null){
+                return byDepName;
+            }else{
+                Department department = new Department();
+                department.setDepName(depName);
+                return departmentRepository.save(department);
+            }
+        };
     }
 
     public Student getStudentById(Long id) {

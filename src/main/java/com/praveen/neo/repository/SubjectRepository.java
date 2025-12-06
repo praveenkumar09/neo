@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SubjectRepository extends Neo4jRepository<Subject,Long> {
+
+    Subject findBySubName(String name);
 }

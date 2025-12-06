@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DepartmentRepository extends Neo4jRepository<Department,Long> {
+
+    Department findByDepName(String name);
 }
