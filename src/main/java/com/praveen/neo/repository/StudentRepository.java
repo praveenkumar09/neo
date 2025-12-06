@@ -10,4 +10,5 @@ import java.util.List;
 public interface StudentRepository extends Neo4jRepository<Student,Long> {
     List<Student> findByName(String name);
     List<Student> findByNameAndBirthYear(String name,Integer year);
+    List<Student> findByNameOrBirthYear(String name,Integer year);
 }

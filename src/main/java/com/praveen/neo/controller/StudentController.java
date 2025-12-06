@@ -73,4 +73,13 @@ public class StudentController {
         return studentService
                 .getStudentByNameAndBirthYear(name,birthYear);
     }
+
+    @GetMapping("/getStudentByNameOrBirthYear/{name}/{birthYear}")
+    public List<Student> getStudentByNameOrBirthYear(
+            @PathVariable String name,
+            @PathVariable Integer birthYear
+    ){
+        return studentService
+                .getStudentByNameOrBirthYear(name,birthYear);
+    }
 }
