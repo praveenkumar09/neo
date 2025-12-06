@@ -80,4 +80,10 @@ public class StudentService {
                     return studentRepository.save(student);
                 }).orElseThrow();
     }
+
+    public String deleteStudent(Long id) {
+         studentRepository
+                .deleteById(id);
+         return "Student deleted successfully";
+    }
 }
