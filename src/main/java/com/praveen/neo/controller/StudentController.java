@@ -64,4 +64,13 @@ public class StudentController {
          return studentService
                 .deleteStudent(id);
     }
+
+    @GetMapping("/getStudentByNameAndBirthYear/{name}/{birthYear}")
+    public List<Student> getStudentByNameAndBirthYear(
+            @PathVariable String name,
+            @PathVariable Integer birthYear
+    ){
+        return studentService
+                .getStudentByNameAndBirthYear(name,birthYear);
+    }
 }

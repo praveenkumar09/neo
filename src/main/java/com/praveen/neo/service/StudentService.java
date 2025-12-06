@@ -133,4 +133,8 @@ public class StudentService {
                 .deleteById(id);
          return "Student deleted successfully";
     }
+
+    public List<Student> getStudentByNameAndBirthYear(String name, Integer birthYear) {
+        return studentRepository.findByNameAndBirthYear(name,birthYear);
+    }
 }
