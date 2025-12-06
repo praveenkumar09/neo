@@ -6,9 +6,11 @@ import com.praveen.neo.entity.Student;
 import com.praveen.neo.entity.Subject;
 import com.praveen.neo.model.CreateStudentRequest;
 import com.praveen.neo.model.CreateSubjectRequest;
+import com.praveen.neo.model.UpdateStudentRequest;
 import com.praveen.neo.repository.DepartmentRepository;
 import com.praveen.neo.repository.StudentRepository;
 import com.praveen.neo.repository.SubjectRepository;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -66,5 +68,16 @@ public class StudentService {
 
     public List<Student> findAllStudent() {
         return studentRepository.findAll();
+    }
+
+    public Student updateStudent(UpdateStudentRequest updateStudentRequest) {
+        return studentRepository
+                .findById(updateStudentRequest.getId())
+                .map(student -> {
+                    student.setName(updateStudentRequest.getName());
+                    student.setBirthYear(updateStudentRequest.getBirthYear());
+                    student.setCountry(updateStudentRequest.getCountry());
+                    return studentRepository.save(student);
+                }).orElseThrow();
     }
 }

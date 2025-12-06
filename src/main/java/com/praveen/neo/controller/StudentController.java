@@ -2,6 +2,7 @@ package com.praveen.neo.controller;
 
 import com.praveen.neo.entity.Student;
 import com.praveen.neo.model.CreateStudentRequest;
+import com.praveen.neo.model.UpdateStudentRequest;
 import com.praveen.neo.service.StudentService;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,5 +47,13 @@ public class StudentController {
     public List<Student> getAllStudent(){
         return studentService
                 .findAllStudent();
+    }
+
+    @PutMapping("/update")
+    public Student updateStudent(
+            @RequestBody UpdateStudentRequest updateStudentRequest
+    ){
+        return studentService
+                .updateStudent(updateStudentRequest);
     }
 }
