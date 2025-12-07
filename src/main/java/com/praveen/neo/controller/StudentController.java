@@ -92,4 +92,13 @@ public class StudentController {
         return studentService
                 .getStudentsByBirthYear(getStudentsByBirthYear);
     }
+
+    @GetMapping("/getStudentsWithPagination")
+    public List<Student> getStudentsWithPagination(
+            @RequestParam Integer page,
+            @RequestParam Integer size
+    ){
+        return studentService
+                .getStudentsWithPagination(page,size);
+    }
 }

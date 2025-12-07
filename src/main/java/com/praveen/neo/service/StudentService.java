@@ -12,6 +12,8 @@ import com.praveen.neo.repository.DepartmentRepository;
 import com.praveen.neo.repository.StudentRepository;
 import com.praveen.neo.repository.SubjectRepository;
 import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -146,5 +148,13 @@ public class StudentService {
     public List<Student> getStudentsByBirthYear(GetStudentsByBirthYear getStudentsByBirthYear) {
         return studentRepository
                 .findByBirthYearIn(getStudentsByBirthYear.getBirthYear());
+    }
+
+    public List<Student> getStudentsWithPagination(
+            Integer page,
+            Integer size
+    ) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+        return studentRepository.findAll(pageable).getContent();
     }
 }
