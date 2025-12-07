@@ -24,4 +24,6 @@ public interface StudentRepository extends Neo4jRepository<Student,Long> {
             "and n.birth_year= $year " +
             "RETURN n,rel,node")
     List<Student> getByNameBirthYearAndLoadRelationships(String name,Integer year);
+
+    List<Student> findByNameStartsWith(String name);
 }

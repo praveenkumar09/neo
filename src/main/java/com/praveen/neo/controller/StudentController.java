@@ -47,9 +47,17 @@ public class StudentController {
     @GetMapping("/getStudentByNameLike/{name}")
     public List<Student> getStudentByNameLike(
             @PathVariable String name
-    ){
+    ) {
         return studentService
                 .getStudentByNameLike(name);
+    }
+
+    @GetMapping("/getStudentByNameStartsWith/{name}")
+    public List<Student> getStudentByNameStartsWith(
+            @PathVariable String name
+    ){
+        return studentService
+                .getStudentByNameStartsWith(name);
     }
 
 

@@ -169,4 +169,9 @@ public class StudentService {
         return studentRepository
                 .findByNameLike(name);
     }
+
+    public List<Student> getStudentByNameStartsWith(String name) {
+        return studentRepository
+                .findByNameStartsWith(name);
+    }
 }
