@@ -101,4 +101,13 @@ public class StudentController {
         return studentService
                 .getStudentsWithPagination(page,size);
     }
+
+    @GetMapping("/getStudentsWithSorting")
+    public List<Student> getStudentsWithPaginationAndSorting(
+            @RequestParam Integer page,
+            @RequestParam Integer size
+    ){
+        return studentService
+                .getStudentsWithPaginationAndSorting(page,size);
+    }
 }

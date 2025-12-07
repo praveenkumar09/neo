@@ -14,6 +14,7 @@ import com.praveen.neo.repository.SubjectRepository;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -155,6 +156,12 @@ public class StudentService {
             Integer size
     ) {
         Pageable pageable = PageRequest.of(page - 1, size);
+        return studentRepository.findAll(pageable).getContent();
+    }
+
+    public List<Student> getStudentsWithPaginationAndSorting(Integer page, Integer size) {
+        Sort sort = Sort.by(Sort.Direction.ASC, "name");
+        Pageable pageable = PageRequest.of(page - 1, size,sort);
         return studentRepository.findAll(pageable).getContent();
     }
 }
