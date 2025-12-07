@@ -136,7 +136,7 @@ public class StudentService {
     }
 
     public List<Student> getStudentByNameAndBirthYear(String name, Integer birthYear) {
-        return studentRepository.findByNameAndBirthYear(name,birthYear);
+        return studentRepository.getByNameBirthYearAndLoadRelationships(name,birthYear);
     }
 
     public List<Student> getStudentByNameOrBirthYear(String name, Integer birthYear) {
