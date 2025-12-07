@@ -164,4 +164,9 @@ public class StudentService {
         Pageable pageable = PageRequest.of(page - 1, size,sort);
         return studentRepository.findAll(pageable).getContent();
     }
+
+    public List<Student> getStudentByNameLike(String name) {
+        return studentRepository
+                .findByNameLike(name);
+    }
 }
